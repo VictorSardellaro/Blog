@@ -12,7 +12,7 @@ namespace Blog
 
         static void Main(string[] args)
         {
-            //ReadUsers();
+            ReadUsers();
             //ReadUser();
             //CreateUser();
             //UpdateUser();
@@ -25,9 +25,8 @@ namespace Blog
             var users = repository.Get();
 
             foreach (var user in users)
-            {
                 System.Console.WriteLine(user.Name);
-            }
+
         }
 
         public static void ReadUser()
