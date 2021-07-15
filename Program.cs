@@ -12,20 +12,35 @@ namespace Blog
 
         static void Main(string[] args)
         {
-            ReadUsers();
+            var connection = new SqlConnection(CONNECTION_STRING);
+            connection.Open();
+
+            ReadUsers(connection);
+            ReadRoles(connection);
             //ReadUser();
             //CreateUser();
             //UpdateUser();
             //DeleteUser();
+            connection.Close();
         }
 
-        public static void ReadUsers()
+        public static void ReadUsers(SqlConnection connection)
         {
-            var repository = new UserRepository();
+            var repository = new UserRepository(connection);
             var users = repository.Get();
 
             foreach (var user in users)
                 System.Console.WriteLine(user.Name);
+
+        }
+
+        public static void ReadRoles(SqlConnection connection)
+        {
+            var repository = new RoleRepository(connection);
+            var roles = repository.Get();
+
+            foreach (var role in roles)
+                System.Console.WriteLine(role.Name);
 
         }
 
