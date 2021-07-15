@@ -11,11 +11,25 @@ namespace Blog
 
         static void Main(string[] args)
         {
+            //ReadUsers();
             //ReadUser();
             //CreateUser();
             //UpdateUser();
-            DeleteUser();
+            //DeleteUser();
         }
+
+        public static void ReadUsers()
+        {
+            using (var connection = new SqlConnection(CONNECTION_STRING))
+            {
+                var users = connection.GetAll<User>();
+                foreach (var user in users)
+                {
+                    System.Console.WriteLine(user.Name);
+                }
+            }
+        }
+
 
         public static void ReadUser()
         {
@@ -23,8 +37,6 @@ namespace Blog
             {
                 var user = connection.Get<User>(1);
                 System.Console.WriteLine(user.Name);
-
-
             }
         }
 
@@ -64,8 +76,6 @@ namespace Blog
             {
                 connection.Update<User>(user);
                 System.Console.WriteLine("Atualização realizada com sucesso");
-
-
             }
         }
 
@@ -77,7 +87,6 @@ namespace Blog
                 var user = connection.Get<User>(2);
                 connection.Delete<User>(user);
                 System.Console.WriteLine("Deleção realizada com sucesso");
-
             }
         }
     }
