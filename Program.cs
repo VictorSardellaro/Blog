@@ -15,15 +15,34 @@ namespace Blog
             var connection = new SqlConnection(CONNECTION_STRING);
             connection.Open();
 
-            ReadUsers(connection);
-            ReadRoles(connection);
-            ReadTags(connection);
+            //ReadUsers(connection);
+            //ReadRoles(connection);
+            //ReadTags(connection);
             //ReadUser();
-            //CreateUser();
-            //UpdateUser();
-            //DeleteUser();
+            //CreateUser(connection);
+            //UpdateUser(connection);
+            DeleteUser(connection);
 
             connection.Close();
+        }
+
+        public static void CreateUser(SqlConnection connection)
+        {
+            var user = new User()
+            {
+                Bio = "Equipe Teste02",
+                Email = "teste02@hotmail.com",
+                Image = "https://...",
+                Name = "Equipe Teste02",
+                PasswordHash = "HASH",
+                Slug = "equipe-teste02"
+            };
+            using (connection)
+            {
+                connection.Insert<User>(user);
+                System.Console.WriteLine("Cadastro realizado com sucesso");
+
+            }
         }
 
         public static void ReadUsers(SqlConnection connection)
@@ -34,6 +53,38 @@ namespace Blog
             foreach (var item in items)
                 System.Console.WriteLine(item.Name);
         }
+
+        public static void UpdateUser(SqlConnection connection)
+        {
+            var user = new User()
+            {
+                Id = 3,
+                Bio = "Equipe de suporte",
+                Email = "Suporte@hotmail.com",
+                Image = "https://...",
+                Name = "Equipe de suporte",
+                PasswordHash = "HASH",
+                Slug = "equipe-suporte"
+            };
+            using (connection)
+            {
+                connection.Update<User>(user);
+                System.Console.WriteLine("Atualização realizada com sucesso");
+            }
+        }
+
+        public static void DeleteUser(SqlConnection connection)
+        {
+
+            using (connection)
+            {
+                var user = connection.Get<User>(3);
+                connection.Delete<User>(user);
+                System.Console.WriteLine("Usuario removido com sucesso");
+            }
+        }
+
+
 
         public static void ReadRoles(SqlConnection connection)
         {
@@ -52,6 +103,8 @@ namespace Blog
             foreach (var item in items)
                 System.Console.WriteLine(item.Name);
         }
+
+
 
 
     }
