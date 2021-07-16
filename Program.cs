@@ -17,6 +17,7 @@ namespace Blog
 
             ReadUsers(connection);
             ReadRoles(connection);
+            ReadTags(connection);
             //ReadUser();
             //CreateUser();
             //UpdateUser();
@@ -28,80 +29,30 @@ namespace Blog
         public static void ReadUsers(SqlConnection connection)
         {
             var repository = new Repository<User>(connection);
-            var users = repository.Get();
+            var items = repository.Get();
 
-            foreach (var user in users)
-                System.Console.WriteLine(user.Name);
-
+            foreach (var item in items)
+                System.Console.WriteLine(item.Name);
         }
 
         public static void ReadRoles(SqlConnection connection)
         {
-            var repository = new RoleRepository(connection);
-            var roles = repository.Get();
+            var repository = new Repository<Role>(connection);
+            var items = repository.Get();
 
-            foreach (var role in roles)
-                System.Console.WriteLine(role.Name);
-
+            foreach (var item in items)
+                System.Console.WriteLine(item.Name);
         }
 
-        public static void ReadUser()
+        public static void ReadTags(SqlConnection connection)
         {
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(1);
-                System.Console.WriteLine(user.Name);
-            }
+            var repository = new Repository<Tag>(connection);
+            var items = repository.Get();
+
+            foreach (var item in items)
+                System.Console.WriteLine(item.Name);
         }
 
-        public static void CreateUser()
-        {
-            var user = new User()
-            {
-                Bio = "Equipe Teste",
-                Email = "eteste@hotmail.com",
-                Image = "https://...",
-                Name = "Equipe Teste",
-                PasswordHash = "HASH",
-                Slug = "equipe-teste"
-            };
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Insert<User>(user);
-                System.Console.WriteLine("Cadastro realizado com sucesso");
 
-
-            }
-        }
-
-        public static void UpdateUser()
-        {
-            var user = new User()
-            {
-                Id = 2,
-                Bio = "Equipe de suporte",
-                Email = "Suporte@hotmail.com",
-                Image = "https://...",
-                Name = "Equipe de suporte",
-                PasswordHash = "HASH",
-                Slug = "equipe-suporte"
-            };
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Update<User>(user);
-                System.Console.WriteLine("Atualização realizada com sucesso");
-            }
-        }
-
-        public static void DeleteUser()
-        {
-
-            using (var connection = new SqlConnection(CONNECTION_STRING))
-            {
-                var user = connection.Get<User>(2);
-                connection.Delete<User>(user);
-                System.Console.WriteLine("Deleção realizada com sucesso");
-            }
-        }
     }
 }
