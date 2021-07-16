@@ -15,13 +15,22 @@ namespace Blog
             var connection = new SqlConnection(CONNECTION_STRING);
             connection.Open();
 
-            //ReadUsers(connection);
+
+
+            //CreateRole(connection);
             //ReadRoles(connection);
+            //UpdateRole(connection);
+            //DeleteRole(connection);
+
+            //CreateTag(connection);
             //ReadTags(connection);
-            //ReadUser();
+            //UpdateTag(connection);
+            //DeleteTag(connection);
+
             //CreateUser(connection);
+            //ReadUsers(connection);
             //UpdateUser(connection);
-            DeleteUser(connection);
+            //DeleteUser(connection);
 
             connection.Close();
         }
@@ -40,7 +49,7 @@ namespace Blog
             using (connection)
             {
                 connection.Insert<User>(user);
-                System.Console.WriteLine("Cadastro realizado com sucesso");
+                System.Console.WriteLine("Cadastro de usuario realizado com sucesso");
 
             }
         }
@@ -84,7 +93,20 @@ namespace Blog
             }
         }
 
+        public static void CreateRole(SqlConnection connection)
+        {
+            var role = new Role()
+            {
+                Name = "Manager",
+                Slug = "manager"
+            };
+            using (connection)
+            {
+                connection.Insert<Role>(role);
+                System.Console.WriteLine("Cadastro de Role realizado com sucesso");
 
+            }
+        }
 
         public static void ReadRoles(SqlConnection connection)
         {
@@ -95,6 +117,47 @@ namespace Blog
                 System.Console.WriteLine(item.Name);
         }
 
+        public static void UpdateRole(SqlConnection connection)
+        {
+            var role = new Role()
+            {
+                Id = 2,
+                Name = "Manager2",
+                Slug = "manager2"
+            };
+            using (connection)
+            {
+                connection.Update<Role>(role);
+                System.Console.WriteLine("Atualização de role realizada com sucesso");
+            }
+        }
+
+        public static void DeleteRole(SqlConnection connection)
+        {
+
+            using (connection)
+            {
+                var role = connection.Get<Role>(2);
+                connection.Delete<Role>(role);
+                System.Console.WriteLine("Role removido com sucesso");
+            }
+        }
+
+        public static void CreateTag(SqlConnection connection)
+        {
+            var tag = new Tag()
+            {
+                Name = "ASP.NET CORE",
+                Slug = "aspnetcore"
+            };
+            using (connection)
+            {
+                connection.Insert<Tag>(tag);
+                System.Console.WriteLine("Cadastro de TAG realizado com sucesso");
+
+            }
+        }
+
         public static void ReadTags(SqlConnection connection)
         {
             var repository = new Repository<Tag>(connection);
@@ -103,6 +166,34 @@ namespace Blog
             foreach (var item in items)
                 System.Console.WriteLine(item.Name);
         }
+
+        public static void UpdateTag(SqlConnection connection)
+        {
+            var tag = new Tag()
+            {
+                Id = 2,
+                Name = "ASP.NET CORE 2",
+                Slug = "aspnetcore2"
+            };
+            using (connection)
+            {
+                connection.Update<Tag>(tag);
+                System.Console.WriteLine("Atualização de TAG realizada com sucesso");
+            }
+        }
+
+        public static void DeleteTag(SqlConnection connection)
+        {
+
+            using (connection)
+            {
+                var tag = connection.Get<Tag>(2);
+                connection.Delete<Tag>(tag);
+                System.Console.WriteLine("TAG removido com sucesso");
+            }
+        }
+
+
 
 
 
