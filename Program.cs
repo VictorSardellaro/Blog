@@ -27,7 +27,8 @@ namespace Blog
             //UpdateTag(connection);
             //DeleteTag(connection);
 
-            CreateUser(connection);
+            //CreateUser(connection);
+            ReadUsersWithRoles(connection);
             //ReadUsers(connection);
             //UpdateUser(connection);
             //DeleteUser(connection);
@@ -54,6 +55,20 @@ namespace Blog
             }
         }
 
+        public static void ReadUsersWithRoles(SqlConnection connection)
+        {
+            var repository = new UserRepository(connection);
+            var items = repository.GetWithRoles();
+
+            foreach (var item in items)
+            {
+                System.Console.WriteLine(item.Name);
+                foreach (var role in item.Roles)
+                    System.Console.WriteLine($" - {role.Name}");
+            }
+        }
+
+
         public static void ReadUsers(SqlConnection connection)
         {
             var repository = new Repository<User>(connection);
@@ -63,7 +78,7 @@ namespace Blog
             {
                 System.Console.WriteLine(item.Name);
                 foreach (var role in item.Roles)
-                    System.Console.WriteLine($" - {role.Name}");
+                    System.Console.WriteLine($" - {role.Slug}");
             }
         }
 
