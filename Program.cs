@@ -27,7 +27,7 @@ namespace Blog
             //UpdateTag(connection);
             //DeleteTag(connection);
 
-            //CreateUser(connection);
+            CreateUser(connection);
             //ReadUsers(connection);
             //UpdateUser(connection);
             //DeleteUser(connection);
@@ -39,12 +39,12 @@ namespace Blog
         {
             var user = new User()
             {
-                Bio = "Equipe Teste02",
-                Email = "teste02@hotmail.com",
+                Bio = "Equipe Teste03",
+                Email = "teste03@hotmail.com",
                 Image = "https://...",
-                Name = "Equipe Teste02",
+                Name = "Equipe Teste03",
                 PasswordHash = "HASH",
-                Slug = "equipe-teste02"
+                Slug = "equipe-teste03"
             };
             using (connection)
             {
@@ -60,7 +60,11 @@ namespace Blog
             var items = repository.Get();
 
             foreach (var item in items)
+            {
                 System.Console.WriteLine(item.Name);
+                foreach (var role in item.Roles)
+                    System.Console.WriteLine($" - {role.Name}");
+            }
         }
 
         public static void UpdateUser(SqlConnection connection)
